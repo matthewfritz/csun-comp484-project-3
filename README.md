@@ -3,7 +3,7 @@ The third project for COMP 484 (Web Engineering) at CSUN. It's an e-commerce sys
 
 ## Topics Covered
 
-- PHP
+- PHP 7
 - AJAX
 - JSON
 - Session Handling

@@ -9,7 +9,8 @@
 
 // array of library files to load
 $files = [
-	"Environment"
+	"Environment",
+	"Database",
 ];
 
 // iterate over and load all of the files

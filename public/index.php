@@ -11,3 +11,4 @@
 require_once("../lib/Initialize.php");
 
 // landing page code goes here
+echo "HI";

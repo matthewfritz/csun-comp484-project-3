@@ -2,7 +2,7 @@
 
 /**
  * Environment.php
- * Handles the loading of the .env.php file and its inclusion into the environment
+ * Handles the loading of the configuration file and its inclusion into the environment
  *
  * Author: Matthew Fritz <mattf@burbankparanormal.com>
  */
