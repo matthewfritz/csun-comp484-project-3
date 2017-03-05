@@ -1,0 +1,25 @@
+{
+  "name": "csun-comp484-project-3",
+  "version": "1.0.0",
+  "description": "The third project for COMP 484 (Web Engineering) at CSUN. It's an e-commerce system for a fictitious coffee company.",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/matthewfritz/csun-comp484-project-3.git"
+  },
+  "keywords": [],
+  "author": "Matthew Fritz <mattf@burbankparanormal.com>",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/matthewfritz/csun-comp484-project-3/issues"
+  },
+  "homepage": "https://github.com/matthewfritz/csun-comp484-project-3#readme",
+  "dependencies": {
+      "fs": "0.0.1-security",
+      "http": "0.0.0",
+      "socket.io": "^1.7.3"
+   }
+}
