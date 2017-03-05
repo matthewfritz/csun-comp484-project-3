@@ -16,12 +16,12 @@ $files = [
 foreach($files as $file) {
 	// a require_once will fail with a fatal error if a file cannot be loaded
 	// and that's exactly the behavior we want
-	require_once("{$file}.php");
+	require_once("framework/{$file}.php");
 }
 
 // load the environment configuration or die if the file was not able to be
 // loaded successfully
-if(!Environment::loadEnvironment()) {
+if(!Environment::loadEnvironmentFile("../.env.php")) {
 	die("Could not load environment file");
 }
 

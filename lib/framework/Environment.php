@@ -12,11 +12,12 @@ class Environment
 	 * Loads the environment file. Returns a boolean determining whether the
 	 * file has been loaded correctly.
 	 *
+	 * @param string $path The path to the environment file
 	 * @return boolean
 	 */
-	public static function loadEnvironment() : bool {
+	public static function loadEnvironmentFile(string $path) : bool {
 		// attempt to load the file
-		$return = include_once('../.env.php');
+		$return = include_once($path);
 		if($return !== FALSE) {
 			// file was loaded correctly so push everything into the environment
 			foreach($return as $key => $value) {
@@ -41,7 +42,7 @@ class Environment
  *
  * @return mixed|null
  */
-function env($key, $default=null) {
+function env(string $key, $default=null) {
 	// return the value if it exists
 	if(isset($_ENV[$key])) {
 		return $_ENV[$key];
