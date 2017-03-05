@@ -64,3 +64,23 @@ function session_forget($key) : bool {
 
 	return false;
 }
+
+/**
+ * Performs a full session destruction and purge. This method removes all data
+ * in the session, removes the session cookie, and then destroys the session.
+ */
+function session_destroy_full() {
+	// Unset all of the session variables.
+	$_SESSION = array();
+	// Kill the session by destroying the session
+	// cookie
+	if (ini_get("session.use_cookies")) {
+	    $params = session_get_cookie_params();
+	    setcookie(session_name(), '', time() - 42000,
+	        $params["path"], $params["domain"],
+	        $params["secure"], $params["httponly"]
+	    );
+	}
+	// Finally, destroy the session itself.
+	session_destroy();
+}
