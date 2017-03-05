@@ -20,3 +20,7 @@ This project requires certain modules from NodeJS (namely `socket.io`) so you'll
 ```npm install```
 
 This will give you all of the dependencies from the `package.json` file.
+
+### Document Root
+
+The public functionality is rooted within the `public` directory so that is where you should configure the `DocumentRoot` for Apache when hosting this application.
