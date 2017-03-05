@@ -51,18 +51,37 @@ function session($key, $default=null) {
 }
 
 /**
- * Removes the value of a session element matching the given key. Returns true
- * if the removal was successful and false otherwise.
+ * Removes session data.
  *
+ * If the key is an array it will be used to remove all of its matching elements
+ * in the session.
+ *
+ * If the key is a single value this function removes its matching element.
+ *
+ * Returns true if the removal was successful and false otherwise.
+ *
+ * @param mixed $key The key or array to apply for the session operation
  * @return boolean
  */
 function session_forget($key) : bool {
-	if(isset($_SESSION[$key])) {
-		unset($_SESSION[$key]);
-		return true;
+	// are we only removing a single value?
+	if(!is_array($key)) {
+		if(isset($_SESSION[$key])) {
+			unset($_SESSION[$key]);
+			return true;
+		}
+		return false;
 	}
 
-	return false;
+	// we are removing a value or values
+	$success = false;
+	foreach($key as $k) {
+		if(isset($_SESSION[$key])) {
+			unset($_SESSION[$key]);
+			$success = true;
+		}
+	}
+	return $success;
 }
 
 /**
