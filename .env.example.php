@@ -6,6 +6,9 @@ return [
 	// application timezone
 	'APP_TIMEZONE' => 'America/Los_Angeles',
 
+	// session configuration
+	'SESSION_USER_ID' => 'user_id', // this is where the user ID will be stored in the session
+
 	// database configuration parameters
 	'DATABASE_HOST' => '', // host
 	'DATABASE_PORT' => '', // port

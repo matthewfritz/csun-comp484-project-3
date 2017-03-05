@@ -12,6 +12,7 @@ $files = [
 	"Session",
 	"Environment",
 	"Database",
+	"Authentication",
 ];
 
 // iterate over and load all of the files
