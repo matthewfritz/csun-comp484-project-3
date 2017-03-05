@@ -31,4 +31,27 @@ class Authentication
 
 		return null;
 	}
+
+	/**
+	 * Performs a login operation and returns a boolean that describes whether
+	 * the authentication attempt was successful.
+	 *
+	 * @param string $username The username of the login attempt
+	 * @param string $password The password of the login attempt
+	 *
+	 * @return boolean
+	 */
+	public static function login(string $username, string $password) : bool {
+		// TODO: Implement the body of this method
+		return false;
+	}
+
+	/**
+	 * Performs a logout operation on the logged-in user.
+	 */
+	public static function logout() {
+		if(self::check()) {
+			session_destroy_full();
+		}
+	}
 }

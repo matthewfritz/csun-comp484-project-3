@@ -12,6 +12,7 @@ $files = [
 	"Session",
 	"Environment",
 	"Database",
+	"Redirect",
 	"Authentication",
 ];
 
