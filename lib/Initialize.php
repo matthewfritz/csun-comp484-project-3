@@ -9,6 +9,7 @@
 
 // array of library files to load
 $files = [
+	"Session",
 	"Environment",
 	"Database",
 ];
