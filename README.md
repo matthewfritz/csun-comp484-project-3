@@ -24,3 +24,11 @@ This will give you all of the dependencies from the `package.json` file.
 ### Document Root
 
 The public functionality is rooted within the `public` directory so that is where you should configure the `DocumentRoot` for Apache when hosting this application.
+
+## Running the Socket Server
+
+In order to run the Socket.io portion of the application you'll need to execute the following command:
+
+```node server.js```
+
+This will create and run a Socket.io server on port 3000. The URL will be `http://localhost:3000/socket-io-coffee` by default.
