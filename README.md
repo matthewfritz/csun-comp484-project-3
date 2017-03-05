@@ -13,7 +13,9 @@ The third project for COMP 484 (Web Engineering) at CSUN. It's an e-commerce sys
 - Socket.io
 - Real-Time Messaging
 
-## Special Installation Instructions
+## Installation
+
+### Node Dependencies
 
 This project requires certain modules from NodeJS (namely `socket.io`) so you'll need to execute the following command:
 

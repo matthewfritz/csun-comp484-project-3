@@ -3,6 +3,9 @@
 // array that holds the environment configuration for this application
 return [
 
+	// application timezone
+	'APP_TIMEZONE' => 'America/Los_Angeles',
+
 	// database configuration parameters
 	'DATABASE_HOST' => '', // host
 	'DATABASE_PORT' => '', // port
