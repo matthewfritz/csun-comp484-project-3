@@ -21,6 +21,10 @@ This project requires certain modules from NodeJS (namely `socket.io`) so you'll
 
 This will give you all of the dependencies from the `package.json` file.
 
+### Database Creation
+
+Import the `.sql` file in the `sql/` directory into your database environment to create and seed your database.
+
 ### Environment Configuration
 
 Copy the `.env.example.php` file to be `.env.php` and fill-out the appropriate values for your environment.
