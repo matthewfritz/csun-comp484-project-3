@@ -1,9 +1,11 @@
 # csun-comp484-project-3
 The third project for COMP 484 (Web Engineering) at CSUN. It's an e-commerce system for a fictitious coffee company.
 
-## Concepts Covered
+## Topics Covered
 
 - PHP
+- AJAX
+- JSON
 - Session Handling
 - Form Handling and HTTP POST
 - Creation of a Shopping Cart
