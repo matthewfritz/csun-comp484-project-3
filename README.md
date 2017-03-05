@@ -21,6 +21,10 @@ This project requires certain modules from NodeJS (namely `socket.io`) so you'll
 
 This will give you all of the dependencies from the `package.json` file.
 
+### Environment Configuration
+
+Copy the `.env.example.php` file to be `.env.php` and fill-out the appropriate values for your environment.
+
 ### Document Root
 
 The public functionality is rooted within the `public` directory so that is where you should configure the `DocumentRoot` for Apache when hosting this application.
