@@ -11,7 +11,8 @@
 
 		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
 
-		<script type="text/javascript" src="asets/jquery/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="assets/jquery/jquery-3.1.1.min.js"></script>
+		<script type="text/javascript" src="assets/tether/tether.min.js"></script>
 		<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/socket/socket.io.1.7.3.min.js"></script>
 	</head>
