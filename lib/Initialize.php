@@ -14,6 +14,7 @@ $files = [
 	"Developer",
 	"Database",
 	"Redirect",
+	"Menu",
 	"Authentication",
 ];
 
