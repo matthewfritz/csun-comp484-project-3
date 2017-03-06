@@ -35,7 +35,7 @@ function debug($var) {
 			<h6 class="card-header">DEBUG OUTPUT</h6>
 			<div class="card-block">
 				<small>
-				<pre>{$output}</pre>
+					<pre>{$output}</pre>
 				</small>
 			</div>
 		</div>
@@ -52,4 +52,13 @@ OUTPUT;
 function debug_stop($var) {
 	debug($var);
 	exit();
+}
+
+/**
+ * Alias to the debug_stop($var) function.
+ *
+ * @param mixed $var The variable for which to display information.
+ */
+function dd($var) {
+	debug_stop($var);
 }
