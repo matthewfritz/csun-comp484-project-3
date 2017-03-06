@@ -13,11 +13,31 @@
  * @return array
  */
 function menuitems() : array {
-	return [
+	$items =  [
 		"home" => ["url" => "#", "text" => "Home"],
 		"menu" => ["url" => "#", "text" => "Menu"],
 		"orders" => ["url" => "#", "text" => "My Orders"],
 	];
+
+	// display a different menu item based on whether the user has authenticated
+	// successfully
+	if(Authentication::check()) {
+		$items['account'] = [
+			"url" => "#", "text" => "My Account"
+		];
+		$items['auth'] = [
+			"url" => "#", "text" => "Logout"
+		];
+	}
+	else
+	{
+		$items['auth'] = [
+			"url" => "#", "text" => "Login"
+		];
+	}
+
+	// return the set of items
+	return $items;
 }
 
 /**
@@ -39,6 +59,11 @@ function menubar($activeItem="") : string {
 		// if the passed item should be active, apply the class
 		if($key == $activeItem) {
 			$class .= " active";
+		}
+
+		// if there are additional classes to add, apply them
+		if(!empty($item['class'])) {
+			$class .= " {$item['class']}";
 		}
 
 		// create the markup for the menu item and add it to the output
