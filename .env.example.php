@@ -11,6 +11,7 @@ return [
 
 	// session configuration
 	'SESSION_USER_ID' => 'user_id', // this is where the user ID will be stored in the session
+	'SESSION_USER_OBJ' => 'user', // this is where the object representing the logged-in user will be stored in the session
 
 	// database configuration parameters
 	'DATABASE_HOST' => '', // host

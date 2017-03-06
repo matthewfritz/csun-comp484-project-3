@@ -62,6 +62,6 @@ class Authentication
 	 * @return User|null
 	 */
 	public static function user() {
-		return session('logged_in_user');
+		return session(env("SESSION_USER_OBJ", "logged_in_user"));
 	}
 }
