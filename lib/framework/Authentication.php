@@ -54,4 +54,14 @@ class Authentication
 			session_destroy_full();
 		}
 	}
+
+	/**
+	 * Returns an object representing the currently logged-in user or NULL if
+	 * no user is logged-in.
+	 *
+	 * @return User|null
+	 */
+	public static function user() {
+		return session('logged_in_user');
+	}
 }
