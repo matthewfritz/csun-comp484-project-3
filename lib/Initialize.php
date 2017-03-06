@@ -11,6 +11,7 @@
 $files = [
 	"Session",
 	"Environment",
+	"Developer",
 	"Database",
 	"Redirect",
 	"Authentication",
