@@ -13,31 +13,35 @@
  * @return array
  */
 function menuitems() : array {
-	$items =  [
+	$left =  [
 		"home" => ["url" => "#", "text" => "Home"],
 		"menu" => ["url" => "#", "text" => "Menu"],
 		"orders" => ["url" => "#", "text" => "My Orders"],
 	];
+	$right = [];
 
 	// display a different menu item based on whether the user has authenticated
 	// successfully
 	if(Authentication::check()) {
-		$items['account'] = [
-			"url" => "#", "text" => "My Account"
+		$right['account'] = [
+			"url" => "#", "text" => "My Account",
 		];
-		$items['auth'] = [
-			"url" => "#", "text" => "Logout"
+		$right['auth'] = [
+			"url" => "#", "text" => "Logout",
 		];
 	}
 	else
 	{
-		$items['auth'] = [
+		$right['auth'] = [
 			"url" => "#", "text" => "Login"
 		];
 	}
 
 	// return the set of items
-	return $items;
+	return [
+		'left' => $left,
+		'right' => $right
+	];
 }
 
 /**
@@ -47,33 +51,17 @@ function menuitems() : array {
  * @param string $activeItem Optional key of the item to make active
  * @return string
  */
-function menubar($activeItem="") : string {
+function menubar($activeItem="home") : string {
 	// build the menu elements and figure out which one should be active
 	$items = menuitems();
 
-	// generate the output based on the menu items
-	$output = "<ul class=\"navbar-nav\">";
-	foreach($items as $key => $item) {
-		$class = "nav-item";
+	// create the menu output for the active element and the left/right sides
+	// of the menu bar
+	$output = generateMenuOutput($items['left'], $activeItem, "navbar-nav mr-auto");
+	$output .= generateMenuOutput($items['right'], $activeItem, "navbar-nav my-2 my-lg-0");
 
-		// if the passed item should be active, apply the class
-		if($key == $activeItem) {
-			$class .= " active";
-		}
-
-		// if there are additional classes to add, apply them
-		if(!empty($item['class'])) {
-			$class .= " {$item['class']}";
-		}
-
-		// create the markup for the menu item and add it to the output
-		$output .= <<<MENUITEM
-			<li class="{$class}">
-				<a class="nav-link" href="{$item['url']}">{$item['text']}</a>
-			</li>
-MENUITEM;
-	}
-	$output .= "</ul>";
+	// grab the application title
+	$appTitle = env("APP_TITLE", "My Application");
 
 	// build and return the markup for the menu bar
 	return <<<MENUBAR
@@ -81,10 +69,54 @@ MENUITEM;
 	  <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
 	    <span class="navbar-toggler-icon"></span>
 	  </button>
-	  <a class="navbar-brand" href="#">Tsarbucks</a>
+	  <a class="navbar-brand" href="#">{$appTitle}</a>
 	  <div class="collapse navbar-collapse" id="navbarNav">
 	    {$output}
 	  </div>
 	</nav>
 MENUBAR;
+}
+
+/**
+ * Generates and returns the menu elements based on the items, the active item,
+ * and the CSS classes to apply to the menu.
+ *
+ * @param array $items The array of items to build in the menu portion
+ * @param string $activeItem The key of the item to make active
+ * @param string $menuClasses The CSS classes to apply to the menu element
+ *
+ * @return string
+ */
+function generateMenuOutput(
+	array $items, string $activeItem, $menuClasses="navbar-nav") : string {
+	$output = "";
+
+	// generate the output based on the menu items if there are menu items
+	// to add to the navigation
+	if(!empty($items)) {
+		$output .= "<ul class=\"{$menuClasses}\">";
+		foreach($items as $key => $item) {
+			$class = "nav-item";
+
+			// if the passed item should be active, apply the class
+			if($key == $activeItem) {
+				$class .= " active";
+			}
+
+			// if there are additional classes to add, apply them
+			if(!empty($item['class'])) {
+				$class .= " {$item['class']}";
+			}
+
+			// create the markup for the menu item and add it to the output
+			$output .= <<<MENUITEM
+				<li class="{$class}">
+					<a class="nav-link" href="{$item['url']}">{$item['text']}</a>
+				</li>
+MENUITEM;
+		}
+		$output .= "</ul>";
+	}
+
+	return $output;
 }

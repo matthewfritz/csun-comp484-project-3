@@ -42,7 +42,26 @@ class Authentication
 	 * @return boolean
 	 */
 	public static function login(string $username, string $password) : bool {
-		// TODO: Implement the body of this method
+		$users = Database::instance()->selectWhere('users', [
+			['username', '=', $username],
+			['password', '=', sha1($password)],
+		]);
+		if(!empty($users)) {
+			$user = $users[0];
+
+			// place the appropriate values into the session
+			$uid = env("SESSION_USER_ID", "user_id");
+			$u = env("SESSION_USER_OBJ", "user");
+			session([
+				$uid => $user->user_id,
+				$u => $user,
+			]);
+
+			// login was successful
+			return true;
+		}
+
+		// login failed
 		return false;
 	}
 
@@ -62,6 +81,6 @@ class Authentication
 	 * @return User|null
 	 */
 	public static function user() {
-		return session(env("SESSION_USER_OBJ", "logged_in_user"));
+		return session(env("SESSION_USER_OBJ", "user"));
 	}
 }

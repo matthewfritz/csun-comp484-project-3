@@ -22,5 +22,7 @@ echo <<<LEADMARKUP
 	</div>
 LEADMARKUP;
 
+dd(Authentication::check());
+
 // include the footer code
 require_once("layout/footer.php");

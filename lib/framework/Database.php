@@ -210,7 +210,7 @@ class Database
 		// if the statement executed successfully, return all of
 		// the results
 		if($result) {
-			return $stmt->fetchAll(PDO::FETCH_ASSOC);
+			return $stmt->fetchAll(PDO::FETCH_OBJ);
 		}
 
 		// something went wrong

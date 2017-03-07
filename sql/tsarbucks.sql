@@ -38,7 +38,8 @@ CREATE TABLE `tsarbucks`.`users` (
 	`display_name` varchar(255) NOT NULL,
 	`created_at` TIMESTAMP NOT NULL DEFAULT CURRENT_TIMESTAMP,
   	`updated_at` TIMESTAMP NULL DEFAULT NULL,
-  	PRIMARY KEY (`user_id`)
+  	PRIMARY KEY (`user_id`),
+  	UNIQUE (`username`)
 );
 
 /* Creating the roles table */
