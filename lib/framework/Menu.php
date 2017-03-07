@@ -24,7 +24,7 @@ function menuitems() : array {
 	// successfully
 	if(Authentication::check()) {
 		$right['account'] = [
-			"url" => "#", "text" => "My Account",
+			"url" => "#", "text" => "My Account (" . Authentication::user()->display_name . ")",
 		];
 		$right['auth'] = [
 			"url" => "#", "text" => "Logout",
