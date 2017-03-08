@@ -24,42 +24,84 @@ require_once("layout/header.php");
 
 // create the table based on the data
 $data = TsarbucksDatabase::instance()->retrieveAllOrders(Authentication::id());
-dd($data);
+$currentOrderId = -1;
+$table = "";
 
-$table = "<table class=\"table table-hover\">";
-$table .= <<<TABLEHEAD
-    <tr>
-		<th>Product Name</th>
-		<th>Price</th>
-		<th>Size (oz)</th>
-		<th><span class="sr-only">Action</span></th>
-    </tr>
-TABLEHEAD;
+$orderTotal = 0;
+$orderSize = 0;
+
+// iterate over the items that have been returned in the table
 foreach($data as $item) {
-	$table .= <<<TABLEITEM
-	<tr>
-		<td>{$item->display_name}</td>
-		<td>\${$item->price}</td>
-		<td>{$item->size}</td>
-		<td>
-			<form method="POST" action="addCartItem.php">
-				<input type="hidden" name="item_id" value="{$item->product_id}" />
-				<button class="btn btn-primary"><i class="fa fa-cart-plus"></i> Add to Cart</i></button>
-			</form>
-		</td>
-	</tr>
-TABLEITEM;
+	if($item->order_id != $currentOrderId) {
+		// terminate the previous table if it was a real order ID
+		if($currentOrderId != -1) {
+			// add the summation information to the table
+			$table .= <<<TOTALS
+				<td colspan="5">
+					<div class="pull-right">
+					<strong>Total Price:</strong> \$$orderTotal<br />
+					<strong>Total Size:</strong> $orderSize oz
+					</div>
+				</td>
+				</table>
+			</div>
+		</div>
+TOTALS;
+
+			// reset the totals
+			$orderTotal = 0;
+			$orderSize = 0;
+		}
+
+		$currentOrderId = $item->order_id;
+
+		// the order has changed, so add the new header and table markup
+		$table .= "<div class=\"row\"><div class=\"col-sm-12\">";
+		$table .= "<h3>Order {$currentOrderId}</h3>";
+		$table .= <<<TABLEMARKUP
+			<table class="table table-hover table-bordered">
+			<tr>
+				<th>Product Name</th>
+				<th>Size (oz)</th>
+				<th>Quantity</th>
+				<th>Price</th>
+				<th>Status</th>
+			</tr>
+TABLEMARKUP;
+	}
+
+	// add to the running total of the order and size
+	$itemPrice = $item->price * $item->quantity;
+	$orderTotal += $itemPrice;
+	$orderSize += $item->size * $item->quantity;
+
+	// was the order fulfilled?
+	if($item->completed) {
+		$fulfilled = "<span class=\"badge badge-success\">Complete</span>";
+	}
+	else
+	{
+		$fulfilled = "<span class=\"badge badge-default\">Pending</span>";
+	}
+
+	// display the information to the table row
+	$table .= <<<ROWMARKUP
+		<tr>
+			<td>{$item->display_name}</td>
+			<td>{$item->size}</td>
+			<td>{$item->quantity}</td>
+			<td>\${$itemPrice}</td>
+			<td>{$fulfilled}</td>
+		</tr>
+ROWMARKUP;
 }
-$table .= "</table>";
+if($currentOrderId != -1) {
+	// terminate the final table if there were results
+	$table .= "</table>";
+}
 
 // landing page code goes here
-echo <<<LEADMARKUP
-	<div class="row">
-		<div class="col-sm-12">
-			${table}
-		</div>
-	</div>
-LEADMARKUP;
+echo $table;
 
 // include the footer code
 require_once("layout/footer.php");

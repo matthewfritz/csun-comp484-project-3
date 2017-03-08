@@ -31,8 +31,30 @@ class TsarbucksDatabase extends Database
 		return self::$instance;
 	}
 
-	public function retrieveAllOrders($user_id, $ordering="DESC") {
-		$sql = "SELECT * FROM orders WHERE user_id = ? ORDER BY order_id $ordering";
+	/**
+	 * Retrieves all orders from the provided user ID. An optional parameter can
+	 * be specified to change the ordering direction.
+	 *
+	 * @param string $user_id The user ID of the individual for which to retrieve orders
+	 * @param string $ordering Optional parameter to change ordering direction
+	 *
+	 * @return array|boolean
+	 */
+	public function retrieveAllOrders(string $user_id, $ordering="DESC") {
+		$sql = <<<RETRIEVESQL
+			SELECT
+				orders.order_id,
+				orders.product_id,
+				orders.quantity,
+				orders.completed,
+				products.display_name,
+				products.price,
+				products.size
+			FROM orders
+				JOIN products USING (product_id) 
+			WHERE orders.user_id = ?
+			ORDER BY orders.order_id $ordering
+RETRIEVESQL;
 
 		// prepare the statement
 		$stmt = $this->prepareStatement($sql);

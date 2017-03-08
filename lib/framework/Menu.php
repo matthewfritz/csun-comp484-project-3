@@ -29,11 +29,13 @@ function menuitems() : array {
 	if(Authentication::check()) {
 		$cartCount = (!empty($_SESSION['cart']) ? count($_SESSION['cart']) : 0);
 
+		$countMarkup = ($cartCount > 0 ? "<span class=\"badge badge-pill badge-primary\">{$cartCount}</span>" : "");
+
 		$right['account'] = [
 			"url" => "account.php", "text" => "Welcome, " . Authentication::user()->display_name . "!", "static" => "static",
 		];
 		$right['cart'] = [
-			"url" => "cart.php", "text" => "My Cart ({$cartCount})", "icon" => "fa fa-shopping-cart",
+			"url" => "cart.php", "text" => "My Cart $countMarkup", "icon" => "fa fa-shopping-cart",
 		];
 		$right['auth'] = [
 			"url" => "logout.php", "text" => "Logout", "icon" => "fa fa-sign-out",
