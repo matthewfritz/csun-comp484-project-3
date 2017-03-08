@@ -81,7 +81,7 @@ LEADMARKUP;
 else
 {
 	echo <<<NOITEMS
-		<p>You have nothing in your cart. <a href="menu.php">Go buy something</a>.</p>
+		<p>You have nothing in your cart. <a href="menu.php">Buy something</a> or <a href="logout.php">get out</a>.</p>
 NOITEMS;
 }
 

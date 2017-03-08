@@ -21,7 +21,7 @@ echo <<<LEADMARKUP
 	<div class="row">
 		<div class="col-sm-12">
 			<p>
-				<a href="menu.php">Order something</a> or leave.
+				<a href="menu.php">Buy something</a> or leave.
 			</p>
 		</div>
 	</div>

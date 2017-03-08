@@ -7,7 +7,7 @@
  * Author: Matthew Fritz <mattf@burbankparanormal.com>
  */
 
-// array of library files to load
+// array of library framework files to load
 $files = [
 	"Session",
 	"Environment",
@@ -18,11 +18,23 @@ $files = [
 	"Authentication",
 ];
 
-// iterate over and load all of the files
+// array of application-specific files to load
+$appFiles = [
+	"TsarbucksDatabase",
+];
+
+// iterate over and load all of the framework files
 foreach($files as $file) {
 	// a require_once will fail with a fatal error if a file cannot be loaded
 	// and that's exactly the behavior we want
 	require_once("framework/{$file}.php");
+}
+
+// iterate over and load all of the application-specific files
+foreach($appFiles as $appFile) {
+	// a require_once will fail with a fatal error if a file cannot be loaded
+	// and that's exactly the behavior we want
+	require_once("app/{$appFile}.php");
 }
 
 // load the environment configuration or die if the file was not able to be

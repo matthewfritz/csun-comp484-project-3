@@ -23,7 +23,7 @@ if(isset($_POST['cart_item_id'])) {
 
 		// let the user know the item has been removed
 		session([
-			'message' => $item->display_name . " has been removed from your cart",
+			'message' => $item->display_name . " has been removed from your cart because you were too good for it",
 		]);
 
 		// remove the product

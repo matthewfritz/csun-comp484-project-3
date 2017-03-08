@@ -21,7 +21,7 @@ function menuitems() : array {
 	// add the relevant items on the left portion for an authenticated user
 	if(Authentication::check()) {
 		$left["menu"] = ["url" => "menu.php", "text" => "Menu", "icon" => "fa fa-book"];
-		$left["orders"] = ["url" => "#", "text" => "My Orders", "icon" => "fa fa-archive"];
+		$left["orders"] = ["url" => "myOrders.php", "text" => "My Orders", "icon" => "fa fa-archive"];
 	}
 
 	// display a different menu item based on whether the user has authenticated

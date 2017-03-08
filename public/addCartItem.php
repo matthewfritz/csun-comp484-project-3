@@ -28,7 +28,7 @@ if(!empty($_POST['item_id'])) {
 
 	// let the user know the item has been added
 	session([
-		'message' => $product[0]->display_name . " has been added to your cart",
+		'message' => $product[0]->display_name . " has been added to your cart. <a href='cart.php'>View cart</a>",
 	]);
 }
 

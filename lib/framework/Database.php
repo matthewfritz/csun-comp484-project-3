@@ -22,7 +22,7 @@ class Database
 	 * @param string $password The database user account password
 	 * @param string $database The name of the database
 	 */
-	private function __construct($host, $port, $username,
+	protected function __construct($host, $port, $username,
 		$password, $database) {
 		try {
 			// attempt to connect to the database through PDO; this also
@@ -46,7 +46,7 @@ class Database
 	 *
 	 * @return Database
 	 */
-	public static function instance() : Database {
+	public static function instance() {
 		if(empty(self::$instance)) {
 			// construct a new instance of this object from the environment variables
 			self::$instance = new self(
@@ -85,7 +85,7 @@ class Database
 	 */
 	public function max($table, $column) {
 		// prepare and execute the statement
-		$stmt = $this->pdo->prepare(
+		$stmt = $this->prepareStatement(
 			"SELECT * FROM $table ORDER BY $column DESC LIMIT 1"
 		);
 		return $this->retrieveAll($stmt);
@@ -110,7 +110,7 @@ class Database
 	 */
 	public function maxSum($table, $column, $alias="total", $groupBy="id") {
 		// prepare and execute the statement
-		$stmt = $this->pdo->prepare(
+		$stmt = $this->prepareStatement(
 			"SELECT $groupBy,SUM($column) AS $alias FROM $table GROUP BY 
 				$groupBy ORDER BY $alias DESC LIMIT 1"
 		);
@@ -128,7 +128,7 @@ class Database
 	 */
 	public function min($table, $column) {
 		// prepare and execute the statement
-		$stmt = $this->pdo->prepare(
+		$stmt = $this->prepareStatement(
 			"SELECT * FROM $table ORDER BY $column ASC LIMIT 1"
 		);
 		return $this->retrieveAll($stmt);
@@ -171,7 +171,7 @@ class Database
 		}
 
 		// prepare the statement and execute with bound parameters
-		$stmt = $this->pdo->prepare(
+		$stmt = $this->prepareStatement(
 			"SELECT * FROM ${table}${condition}"
 		);
 
@@ -183,6 +183,16 @@ class Database
 		
 		// execute with no bound parameters whatsoever
 		return $this->retrieveAll($stmt);
+	}
+
+	/**
+	 * Creates and returns a prepared statement based on the SQL code provided.
+	 *
+	 * @param string The SQL code to return as a prepared statement
+	 * @return PDOStatement
+	 */
+	protected function prepareStatement($sql) {
+		return $this->pdo->prepare($sql);
 	}
 
 	/**
