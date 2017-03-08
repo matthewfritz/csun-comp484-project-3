@@ -37,8 +37,9 @@ else
 	}
 }
 
-// page title
+// page title and active menu item
 $pageTitle = "Login";
+$activeMenuItem = "auth";
 
 // include the header code
 require_once("layout/header.php");

@@ -10,6 +10,7 @@
 		</title>
 
 		<link rel="stylesheet" href="assets/bootstrap/css/bootstrap.min.css" />
+		<link rel="stylesheet" href="assets/font-awesome-4.7.0/css/font-awesome.min.css" />
 
 		<script type="text/javascript" src="assets/jquery/jquery-3.1.1.min.js"></script>
 		<script type="text/javascript" src="assets/tether/tether.min.js"></script>
@@ -32,6 +33,7 @@
 				</div>
 			</div>
 			<?php
+				$message = session('message');
 				if(!empty($pageTitle)) {
 					echo "<div class=\"row\">";
 					echo "   <div class=\"col-sm-12\">";
@@ -67,5 +69,8 @@
 					echo "      </div>";
 					echo "   </div>";
 					echo "</div>";
+
+					// drop the message from the session
+					session_forget('message');
 				}
 			?>

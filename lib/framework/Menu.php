@@ -14,26 +14,33 @@
  */
 function menuitems() : array {
 	$left =  [
-		"home" => ["url" => "index.php", "text" => "Home"],
-		"menu" => ["url" => "menu.php", "text" => "Menu"],
-		"orders" => ["url" => "#", "text" => "My Orders"],
+		"home" => ["url" => "index.php", "text" => "Home", "icon" => "fa fa-home"],
 	];
 	$right = [];
+
+	// add the relevant items on the left portion for an authenticated user
+	if(Authentication::check()) {
+		$left["menu"] = ["url" => "menu.php", "text" => "Menu", "icon" => "fa fa-book"];
+		$left["orders"] = ["url" => "#", "text" => "My Orders", "icon" => "fa fa-archive"];
+	}
 
 	// display a different menu item based on whether the user has authenticated
 	// successfully
 	if(Authentication::check()) {
 		$right['account'] = [
-			"url" => "account.php", "text" => "My Account (" . Authentication::user()->display_name . ")",
+			"url" => "account.php", "text" => "Welcome, " . Authentication::user()->display_name . "!", "static" => "static",
+		];
+		$right['cart'] = [
+			"url" => "cart.php", "text" => "My Cart", "icon" => "fa fa-shopping-cart",
 		];
 		$right['auth'] = [
-			"url" => "logout.php", "text" => "Logout",
+			"url" => "logout.php", "text" => "Logout", "icon" => "fa fa-sign-out",
 		];
 	}
 	else
 	{
 		$right['auth'] = [
-			"url" => "login.php", "text" => "Login"
+			"url" => "login.php", "text" => "Login", "icon" => "fa fa-sign-in",
 		];
 	}
 
@@ -108,12 +115,30 @@ function generateMenuOutput(
 				$class .= " {$item['class']}";
 			}
 
-			// create the markup for the menu item and add it to the output
-			$output .= <<<MENUITEM
+			// should this list item be a menu link or static text?
+			$itemMarkup = "";
+			if(!empty($item['static'])) {
+				// static text
+				$itemMarkup = <<<STATICTEXT
+				<span class="navbar-text" style="margin-top:1px">
+					{$item['text']}
+				</span>
+STATICTEXT;
+			}
+			else
+			{
+				$icon = (!empty($item['icon']) ? "<i class=\"{$item['icon']}\"></i>" : "");
+
+				// menu item
+				$itemMarkup = <<<MENUITEM
 				<li class="{$class}">
-					<a class="nav-link" href="{$item['url']}">{$item['text']}</a>
+					<a class="nav-link" href="{$item['url']}">$icon {$item['text']}</a>
 				</li>
 MENUITEM;
+			}
+
+			// create the markup for the menu item and add it to the output
+			$output .= $itemMarkup;
 		}
 		$output .= "</ul>";
 	}
