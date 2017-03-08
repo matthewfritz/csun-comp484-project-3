@@ -61,6 +61,8 @@ TABLEITEM;
 	}
 	$table .= "</table>";
 
+	$totalCostText = sprintf("%01.2f", $totalCost);
+
 	// landing page code goes here
 	echo <<<LEADMARKUP
 	<div class="row">
@@ -70,7 +72,7 @@ TABLEITEM;
 	</div>
 	<div class="row">
 		<div class="col-sm-12">
-			<p><strong>Total Cost: \${$totalCost}</strong></p>
+			<p><strong>Total Cost: \${$totalCostText}</strong></p>
 			<p><strong>Total Size: {$totalSize} ounces</strong></p>
 		</div>
 	</div>

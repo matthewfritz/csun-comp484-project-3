@@ -35,17 +35,21 @@ $table = "";
 $orderTotal = 0;
 $orderSize = 0;
 
+$orderTotalText = "";
+
 // iterate over the items that have been returned in the table
 foreach($data as $item) {
 	if($item->order_id != $currentOrderId) {
 		// terminate the previous table if it was a real order ID
 		if($currentOrderId != -1) {
+			$orderTotalText = sprintf("%01.2f", $orderTotal);
+
 			// add the summation information to the table
 			$table .= <<<TOTALS
 				<tr>
 					<td colspan="5">
 						<div class="pull-right">
-							<strong>Total Price:</strong> \$$orderTotal<br />
+							<strong>Total Price:</strong> \$$orderTotalText<br />
 							<strong>Total Size:</strong> $orderSize oz
 						</div>
 					</td>
@@ -82,6 +86,8 @@ TABLEMARKUP;
 	$orderTotal += $itemPrice;
 	$orderSize += $item->size * $item->quantity;
 
+	$itemPriceText = sprintf("%01.2f", $itemPrice);
+
 	// was the order fulfilled?
 	if($item->completed) {
 		$fulfilled = "<span class=\"badge badge-success\">Complete</span>";
@@ -97,18 +103,19 @@ TABLEMARKUP;
 			<td>{$item->display_name}</td>
 			<td>{$item->size}</td>
 			<td>{$item->quantity}</td>
-			<td>\${$itemPrice}</td>
+			<td>\${$itemPriceText}</td>
 			<td>{$fulfilled}</td>
 		</tr>
 ROWMARKUP;
 }
 if($currentOrderId != -1) {
+	$orderTotalText = sprintf("%01.2f", $orderTotal);
 	// terminate the final table if there were results
 	$table .= <<<FINALMARKUP
 		<tr>
 			<td colspan="5">
 				<div class="pull-right">
-					<strong>Total Price:</strong> \$$orderTotal<br />
+					<strong>Total Price:</strong> \$$orderTotalText<br />
 					<strong>Total Size:</strong> $orderSize oz
 				</div>
 			</td>
