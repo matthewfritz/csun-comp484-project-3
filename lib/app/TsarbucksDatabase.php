@@ -122,4 +122,48 @@ UPDATESQL;
 			$productId
 		]);
 	}
+
+	/**
+	 * Creates and adds the user order to the database. The items are specified
+	 * as an array where the key is the product ID and the value is the quantity.
+	 * Returns whether the creation was succesful.
+	 *
+	 * @param string $userId The ID of the user for whom we are creating the order
+	 * @param array $items The array of items to add to the order
+	 *
+	 * @return boolean
+	 */
+	public function createOrder($userId, $items) {
+		// figure out the most recent order ID and then generate a new one
+		$orderObj = $this->max('orders', 'order_id');
+		$oid = (int)($orderObj[0]->order_id) + 1;
+
+		// begin the query
+		$sql = <<<INSERTSQL
+			INSERT INTO orders (order_id, user_id, product_id, quantity)
+			VALUES
+INSERTSQL;
+
+		$params = [];
+
+		// get all the values from the items
+		foreach($items as $pid => $quantity) {
+			$sql .= "(?, ?, ?, ?),";
+
+			// prepare the parameters
+			$params[] = $oid;
+			$params[] = $userId;
+			$params[] = $pid;
+			$params[] = $quantity;
+		}
+
+		// drop off the last comma by performing a substring operation
+		$sql = substr($sql, 0, strlen($sql)-1);
+		
+		// prepare the statement
+		$stmt = $this->prepareStatement($sql);
+
+		// execute the data statement and return whether it was successful
+		return $this->executeDataStatement($stmt, $params);
+	}
 }
