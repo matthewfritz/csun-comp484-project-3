@@ -14,8 +14,8 @@
  */
 function menuitems() : array {
 	$left =  [
-		"home" => ["url" => "#", "text" => "Home"],
-		"menu" => ["url" => "#", "text" => "Menu"],
+		"home" => ["url" => "index.php", "text" => "Home"],
+		"menu" => ["url" => "menu.php", "text" => "Menu"],
 		"orders" => ["url" => "#", "text" => "My Orders"],
 	];
 	$right = [];
@@ -24,16 +24,16 @@ function menuitems() : array {
 	// successfully
 	if(Authentication::check()) {
 		$right['account'] = [
-			"url" => "#", "text" => "My Account (" . Authentication::user()->display_name . ")",
+			"url" => "account.php", "text" => "My Account (" . Authentication::user()->display_name . ")",
 		];
 		$right['auth'] = [
-			"url" => "#", "text" => "Logout",
+			"url" => "logout.php", "text" => "Logout",
 		];
 	}
 	else
 	{
 		$right['auth'] = [
-			"url" => "#", "text" => "Login"
+			"url" => "login.php", "text" => "Login"
 		];
 	}
 

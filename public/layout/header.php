@@ -18,16 +18,6 @@
 	</head>
 	<body>
 		<div class="container">
-			<?php
-				if(!empty($pageTitle)) {
-					echo "<div class=\"row\">";
-					echo "   <div class=\"col-sm-12\">";
-					echo "      <h1>{$pageTitle}</h1>";
-					echo "   </div>";
-					echo "</div>";
-				}
-			?>
-
 			<div class="row">
 				<div class="col-sm-12">
 					<?php
@@ -41,3 +31,41 @@
 					?>
 				</div>
 			</div>
+			<?php
+				if(!empty($pageTitle)) {
+					echo "<div class=\"row\">";
+					echo "   <div class=\"col-sm-12\">";
+					echo "      <h1>{$pageTitle}</h1>";
+					echo "      <br />";
+					echo "   </div>";
+					echo "</div>";
+				}
+
+				// if there are errors, spit them out
+				if(!empty($errors)) {
+					echo "<div class=\"row\">";
+					echo "   <div class=\"col-sm-12\">";
+					echo "      <div class=\"alert alert-danger\">";
+					echo "         <p>The following errors occurred:</p>";
+					echo "         <ul>";
+
+					// iterate over the errors
+					foreach($errors as $error) {
+						echo "            <li>{$error}</li>";
+					}
+
+					echo "         </ul>";
+					echo "      </div>";
+					echo "   </div>";
+					echo "</div>";
+				}
+				else if(!empty($message)) {
+					echo "<div class=\"row\">";
+					echo "   <div class=\"col-sm-12\">";
+					echo "      <div class=\"alert alert-success\">";
+					echo "         {$message}";
+					echo "      </div>";
+					echo "   </div>";
+					echo "</div>";
+				}
+			?>

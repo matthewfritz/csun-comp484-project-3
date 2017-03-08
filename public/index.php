@@ -2,13 +2,16 @@
 
 /*
  * index.php
- * Handles the landing page for the applicaiton
+ * Handles the landing page for the application
  *
  * Author: Matthew Fritz <mattf@burbankparanormal.com>
  */
 
 // initialize the library code
 require_once("../lib/Initialize.php");
+
+// page title
+$pageTitle = "Home";
 
 // include the header code
 require_once("layout/header.php");
@@ -17,12 +20,12 @@ require_once("layout/header.php");
 echo <<<LEADMARKUP
 	<div class="row">
 		<div class="col-sm-12">
-			LANDING PAGE
+			<p>
+				<a href="menu.php">Order something</a> or leave.
+			</p>
 		</div>
 	</div>
 LEADMARKUP;
-
-dd(Authentication::check());
 
 // include the footer code
 require_once("layout/footer.php");
