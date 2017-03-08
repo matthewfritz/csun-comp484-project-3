@@ -40,7 +40,7 @@ foreach($data as $item) {
 		<td>\${$item->price}</td>
 		<td>{$item->size}</td>
 		<td>
-			<form method="POST" action="addItem.php">
+			<form method="POST" action="addCartItem.php">
 				<input type="hidden" name="item_id" value="{$item->product_id}" />
 				<button class="btn btn-primary"><i class="fa fa-cart-plus"></i> Add to Cart</i></button>
 			</form>
