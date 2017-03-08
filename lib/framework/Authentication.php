@@ -57,6 +57,15 @@ class Authentication
 				$u => $user,
 			]);
 
+			// load the user roles into the session
+			$roles = Database::instance()->selectWhere('user_roles', [
+				['user_id', '=', $user->user_id]
+			]);
+			$rid = env("SESSION_USER_ROLES", "user_roles");
+			session([
+				$rid => array_column($roles, "role"),
+			]);
+
 			// login was successful
 			return true;
 		}
@@ -82,5 +91,16 @@ class Authentication
 	 */
 	public static function user() {
 		return session(env("SESSION_USER_OBJ", "user"));
+	}
+
+	/**
+	 * Returns whether the currently logged-in user has a specific role.
+	 *
+	 * @param string $role The name of the role to check
+	 * @return boolean
+	 */
+	public static function userHasRole(string $role) : bool {
+		$roles = session(env("SESSION_USER_ROLES", "user_roles"));
+		return in_array($role, $roles);
 	}
 }

@@ -37,12 +37,14 @@ foreach($data as $item) {
 		if($currentOrderId != -1) {
 			// add the summation information to the table
 			$table .= <<<TOTALS
-				<td colspan="5">
-					<div class="pull-right">
-					<strong>Total Price:</strong> \$$orderTotal<br />
-					<strong>Total Size:</strong> $orderSize oz
-					</div>
-				</td>
+				<tr>
+					<td colspan="5">
+						<div class="pull-right">
+							<strong>Total Price:</strong> \$$orderTotal<br />
+							<strong>Total Size:</strong> $orderSize oz
+						</div>
+					</td>
+				</tr>
 				</table>
 			</div>
 		</div>
@@ -86,7 +88,7 @@ TABLEMARKUP;
 
 	// display the information to the table row
 	$table .= <<<ROWMARKUP
-		<tr>
+		<tr id="order-{$item->order_id}-product-{$item->product_id}">
 			<td>{$item->display_name}</td>
 			<td>{$item->size}</td>
 			<td>{$item->quantity}</td>

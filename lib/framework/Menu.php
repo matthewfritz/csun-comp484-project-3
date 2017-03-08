@@ -20,23 +20,32 @@ function menuitems() : array {
 
 	// add the relevant items on the left portion for an authenticated user
 	if(Authentication::check()) {
-		$left["menu"] = ["url" => "menu.php", "text" => "Menu", "icon" => "fa fa-book"];
-		$left["orders"] = ["url" => "myOrders.php", "text" => "My Orders", "icon" => "fa fa-archive"];
+		if(Authentication::userHasRole('customer')) {
+			$left["menu"] = ["url" => "menu.php", "text" => "Menu", "icon" => "fa fa-book"];
+			$left["orders"] = ["url" => "myOrders.php", "text" => "My Orders", "icon" => "fa fa-archive"];
+		}
+		else if(Authentication::userHasRole('barista')) {
+			$left["orders"] = ["url" => "pendingOrders.php", "text" => "Pending Orders", "icon" => "fa fa-book"];
+		}
 	}
 
 	// display a different menu item based on whether the user has authenticated
 	// successfully
 	if(Authentication::check()) {
-		$cartCount = (!empty($_SESSION['cart']) ? count($_SESSION['cart']) : 0);
+		if(Authentication::userHasRole('customer')) {
+			$cartCount = (!empty($_SESSION['cart']) ? count($_SESSION['cart']) : 0);
 
-		$countMarkup = ($cartCount > 0 ? "<span class=\"badge badge-pill badge-primary\">{$cartCount}</span>" : "");
+			$countMarkup = ($cartCount > 0 ? "<span class=\"badge badge-pill badge-primary\">{$cartCount}</span>" : "");
 
-		$right['account'] = [
-			"url" => "account.php", "text" => "Welcome, " . Authentication::user()->display_name . "!", "static" => "static",
-		];
-		$right['cart'] = [
-			"url" => "cart.php", "text" => "My Cart $countMarkup", "icon" => "fa fa-shopping-cart",
-		];
+			$right['account'] = [
+				"url" => "account.php", "text" => "Welcome, " . Authentication::user()->display_name . "!", "static" => "static",
+			];
+			$right['cart'] = [
+				"url" => "cart.php", "text" => "My Cart $countMarkup", "icon" => "fa fa-shopping-cart",
+			];
+		}
+
+		// everybody gets a logout link
 		$right['auth'] = [
 			"url" => "logout.php", "text" => "Logout", "icon" => "fa fa-sign-out",
 		];
