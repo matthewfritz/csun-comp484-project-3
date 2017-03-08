@@ -27,11 +27,13 @@ function menuitems() : array {
 	// display a different menu item based on whether the user has authenticated
 	// successfully
 	if(Authentication::check()) {
+		$cartCount = (!empty($_SESSION['cart']) ? count($_SESSION['cart']) : 0);
+
 		$right['account'] = [
 			"url" => "account.php", "text" => "Welcome, " . Authentication::user()->display_name . "!", "static" => "static",
 		];
 		$right['cart'] = [
-			"url" => "cart.php", "text" => "My Cart", "icon" => "fa fa-shopping-cart",
+			"url" => "cart.php", "text" => "My Cart ({$cartCount})", "icon" => "fa fa-shopping-cart",
 		];
 		$right['auth'] = [
 			"url" => "logout.php", "text" => "Logout", "icon" => "fa fa-sign-out",
