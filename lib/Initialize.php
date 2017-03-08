@@ -39,7 +39,7 @@ foreach($appFiles as $appFile) {
 
 // load the environment configuration or die if the file was not able to be
 // loaded successfully
-if(!Environment::loadEnvironmentFile("../.env.php")) {
+if(!Environment::loadEnvironmentFile(__DIR__ . "/../.env.php")) {
 	die("Could not load environment file");
 }
 

@@ -15,6 +15,11 @@ if(!Authentication::check()) {
 	redirect('login.php');
 }
 
+// only customers should be able to access this page
+if(!Authentication::userHasRole('customer')) {
+	redirect('index.php');
+}
+
 // page title and active menu item
 $pageTitle = "My Cart";
 $activeMenuItem = "cart";

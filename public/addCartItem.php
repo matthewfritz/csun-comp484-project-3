@@ -15,6 +15,11 @@ if(!Authentication::check()) {
 	redirect('login.php');
 }
 
+// only customers should be able to access this page
+if(!Authentication::userHasRole('customer')) {
+	redirect('index.php');
+}
+
 // only add an item if there was an ID specified
 if(!empty($_POST['item_id'])) {
 	// grab the product with that item ID

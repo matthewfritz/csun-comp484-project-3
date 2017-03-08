@@ -16,6 +16,17 @@
 		<script type="text/javascript" src="assets/tether/tether.min.js"></script>
 		<script type="text/javascript" src="assets/bootstrap/js/bootstrap.min.js"></script>
 		<script type="text/javascript" src="assets/socket/socket.io.1.7.3.min.js"></script>
+
+		<?php
+			if(Authentication::check()) {
+				if(Authentication::userHasRole('customer')) {
+					echo "<script type=\"text/javascript\" src=\"js/customer.js\"></script>";
+				}
+				elseif(Authentication::userHasRole('barista')) {
+					echo "<script type=\"text/javascript\" src=\"js/barista.js\"></script>";
+				}
+			}
+		?>
 	</head>
 	<body>
 		<div class="container">

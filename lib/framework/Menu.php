@@ -32,14 +32,17 @@ function menuitems() : array {
 	// display a different menu item based on whether the user has authenticated
 	// successfully
 	if(Authentication::check()) {
+		// everybody gets the welcome text
+		$right['account'] = [
+			"url" => "account.php", "text" => "Welcome, " . Authentication::user()->display_name . "!", "static" => "static",
+		];
+
+		//  only customers should get a cart item
 		if(Authentication::userHasRole('customer')) {
 			$cartCount = (!empty($_SESSION['cart']) ? count($_SESSION['cart']) : 0);
 
 			$countMarkup = ($cartCount > 0 ? "<span class=\"badge badge-pill badge-primary\">{$cartCount}</span>" : "");
 
-			$right['account'] = [
-				"url" => "account.php", "text" => "Welcome, " . Authentication::user()->display_name . "!", "static" => "static",
-			];
 			$right['cart'] = [
 				"url" => "cart.php", "text" => "My Cart $countMarkup", "icon" => "fa fa-shopping-cart",
 			];

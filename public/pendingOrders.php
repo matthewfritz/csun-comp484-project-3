@@ -1,8 +1,8 @@
 <?php
 
 /*
- * myOrders.php
- * Handles the My Orders page for the application
+ * pendingOrders.php
+ * Handles the Pending Orders page for the application
  *
  * Author: Matthew Fritz <mattf@burbankparanormal.com>
  */
@@ -15,20 +15,20 @@ if(!Authentication::check()) {
 	redirect('login.php');
 }
 
-// only customers should be able to access this page
-if(!Authentication::userHasRole('customer')) {
+// only baristas should be able to access this page
+if(!Authentication::userHasRole('barista')) {
 	redirect('index.php');
 }
 
 // page title and active menu item
-$pageTitle = "My Orders";
+$pageTitle = "Pending Orders";
 $activeMenuItem = "orders";
 
 // include the header code
 require_once("layout/header.php");
 
 // create the table based on the data
-$data = TsarbucksDatabase::instance()->retrieveAllOrders(Authentication::id());
+$data = TsarbucksDatabase::instance()->retrievePendingOrders();
 $currentOrderId = -1;
 $table = "";
 
@@ -64,7 +64,7 @@ TOTALS;
 
 		// the order has changed, so add the new header and table markup
 		$table .= "<div class=\"row\"><div class=\"col-sm-12\">";
-		$table .= "<h3>Order {$currentOrderId}</h3>";
+		$table .= "<h3>Order {$currentOrderId} for {$item->user_display_name}</h3>";
 		$table .= <<<TABLEMARKUP
 			<table class="table table-hover table-bordered">
 			<tr>
@@ -72,7 +72,7 @@ TOTALS;
 				<th>Size (oz)</th>
 				<th>Quantity</th>
 				<th>Price</th>
-				<th>Status</th>
+				<th></th>
 			</tr>
 TABLEMARKUP;
 	}
@@ -88,7 +88,13 @@ TABLEMARKUP;
 	}
 	else
 	{
-		$fulfilled = "<span class=\"badge badge-default\">Pending</span>";
+		$fulfilled = <<<BUTTON
+			<input type="hidden" class="order-id" value="{$item->order_id}" />
+			<input type="hidden" class="product-id" value="{$item->product_id}" />
+			<button role="button" class="btn btn-success btn-item-complete pull-right">
+				<i class="fa fa-check"></i> Mark Complete
+			</button>
+BUTTON;
 	}
 
 	// display the information to the table row
@@ -98,7 +104,7 @@ TABLEMARKUP;
 			<td>{$item->size}</td>
 			<td>{$item->quantity}</td>
 			<td>\${$itemPrice}</td>
-			<td>{$fulfilled}</td>
+			<td class="item-status">{$fulfilled}</td>
 		</tr>
 ROWMARKUP;
 }
@@ -120,7 +126,7 @@ FINALMARKUP;
 }
 
 // landing page code goes here
-echo $table;
+echo "<div id=\"pending-orders\">$table</div>";
 
 // include the footer code
 require_once("layout/footer.php");

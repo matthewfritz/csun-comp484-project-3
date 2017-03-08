@@ -61,4 +61,65 @@ RETRIEVESQL;
 
 		return $this->retrieveAll($stmt, [$user_id]);
 	}
+
+	/**
+	 * Retrieves all pending orders from the database. An optional parameter can
+	 * be specified to change the ordering direction.
+	 *
+	 * @param string $ordering Optional parameter to change ordering direction
+	 *
+	 * @return array|boolean
+	 */
+	public function retrievePendingOrders($ordering="DESC") {
+		$sql = <<<RETRIEVESQL
+			SELECT
+				orders.order_id,
+				orders.product_id,
+				orders.quantity,
+				orders.completed,
+				products.display_name,
+				products.price,
+				products.size,
+				users.display_name AS user_display_name
+			FROM orders
+				JOIN products USING (product_id)
+				JOIN users USING (user_id)
+			WHERE orders.completed = 0
+			ORDER BY orders.order_id $ordering
+RETRIEVESQL;
+
+		// prepare the statement
+		$stmt = $this->prepareStatement($sql);
+
+		return $this->retrieveAll($stmt);
+	}
+
+	/**
+	 * Updates whether an item in an order has been completed. Returns whether
+	 * the update was successful.
+	 *
+	 * @param int $orderId The ID of the order
+	 * @param int $productId The ID of the item
+	 * @param boolean $completed True if the item was completed, false otherwise
+	 *
+	 * @return boolean
+	 */
+	public function updateOrderItemCompletion($orderId, $productId, $completed) {
+		$sql = <<<UPDATESQL
+			UPDATE orders
+			SET completed = ?
+			WHERE order_id = ?
+			AND product_id = ?
+UPDATESQL;
+
+		// prepare the statement
+		$stmt = $this->prepareStatement($sql);
+
+		// execute the data statement and return whether it was successful
+		return $this->executeDataStatement($stmt, [
+			$completed,
+			$orderId,
+			$productId
+		]);
+	}
 }

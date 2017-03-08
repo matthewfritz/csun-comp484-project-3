@@ -15,6 +15,11 @@ if(!Authentication::check()) {
 	redirect('login.php');
 }
 
+// only customers should be able to access this page
+if(!Authentication::userHasRole('customer')) {
+	redirect('index.php');
+}
+
 // only remove an item if there was a cart ID specified
 if(isset($_POST['cart_item_id'])) {
 	// remove the product from the session

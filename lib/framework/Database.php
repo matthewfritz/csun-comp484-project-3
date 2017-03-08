@@ -186,6 +186,31 @@ class Database
 	}
 
 	/**
+	 * Executes an arbitrary data statement with the specified parameters and
+	 * returns whether the operation was successful.
+	 *
+	 * @param PDOStatement The prepared statement to execute
+	 * @param array $params Optional array of data parameters
+	 *
+	 * @return boolean
+	 */
+	protected function executeDataStatement($stmt, $params=[]) {
+		$result = true;
+
+		// parameters passed-in through the second parameter
+		// will be used for executing with bound data
+		if(!empty($params)) {
+			$result = $stmt->execute($params);
+		}
+		else
+		{
+			$result = $stmt->execute();
+		}
+
+		return !empty($result);
+	}
+
+	/**
 	 * Creates and returns a prepared statement based on the SQL code provided.
 	 *
 	 * @param string The SQL code to return as a prepared statement
