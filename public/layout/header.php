@@ -1,4 +1,13 @@
 <!DOCTYPE html>
+<?php
+	if(Authentication::check()) {
+		echo "<html data-user-id=\"" . Authentication::id() . "\">";
+	}
+	else
+	{
+		echo "<html>";
+	}
+?>
 <html>
 	<head>
 		<title>

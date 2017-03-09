@@ -93,6 +93,7 @@ TABLEMARKUP;
 	else
 	{
 		$fulfilled = <<<BUTTON
+			<input type="hidden" class="user-id" value="{$item->user_id}" />
 			<input type="hidden" class="order-id" value="{$item->order_id}" />
 			<input type="hidden" class="product-id" value="{$item->product_id}" />
 			<button role="button" class="btn btn-success btn-item-complete pull-right">

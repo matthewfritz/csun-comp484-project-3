@@ -74,6 +74,7 @@ RETRIEVESQL;
 		$sql = <<<RETRIEVESQL
 			SELECT
 				orders.order_id,
+				orders.user_id,
 				orders.product_id,
 				orders.quantity,
 				orders.completed,
