@@ -136,7 +136,13 @@ UPDATESQL;
 	public function createOrder($userId, $items) {
 		// figure out the most recent order ID and then generate a new one
 		$orderObj = $this->max('orders', 'order_id');
-		$oid = (int)($orderObj[0]->order_id) + 1;
+		if(!empty($orderObj)) {
+			$oid = (int)($orderObj[0]->order_id) + 1;
+		}
+		else
+		{
+			$oid = 1;
+		}
 
 		// begin the query
 		$sql = <<<INSERTSQL
